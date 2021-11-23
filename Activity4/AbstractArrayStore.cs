@@ -8,9 +8,21 @@ namespace CSharp.Activity.Datastore
     {
         public ArrayStore(int arraySize) : base(arraySize)
         {
+
         }
 
-        public override int Add(T argToAdd)
+
+    public override T[] storeArray
+        {
+            get 
+            {
+
+                return this.storeArray;
+            }
+        }
+
+         
+    public override int Add(T argToAdd)
         {
             if (this.Count >= Capacity)
             {
@@ -23,7 +35,7 @@ namespace CSharp.Activity.Datastore
             }
             else
             {
-                this.storeArray[Count++] = argToAdd;
+                this.storeArray [Count++] = argToAdd;
                 return Count;
             }
         }
@@ -110,7 +122,7 @@ namespace CSharp.Activity.Datastore
       public const int DEFAULT_SIZE = 5;
 
       //This is the actual structure that the class uses to store objects
-      public T[] storeArray;
+      private T[] storeArray;
 
       /// <summary>
       /// Returns the maximum size of an array.
