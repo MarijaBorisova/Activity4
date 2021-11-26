@@ -4,38 +4,28 @@ using System.Collections;
 
 namespace CSharp.Activity.Datastore
 {
-    public class ArrayStore<T>: AbstractArrayStore<T>
+    public class ArrayStore<T> : AbstractArrayStore<T>
     {
         public ArrayStore(int arraySize) : base(arraySize)
         {
 
         }
 
-
-    public override T[] storeArray
+        public override int Add(T argToAdd)
         {
-            get 
-            {
 
-                return this.storeArray;
-            }
-        }
-
-         
-    public override int Add(T argToAdd)
-        {
             if (this.Count >= Capacity)
             {
                 return NOT_IN_STRUCTURE;
             }
-            
-            else if (!typeof(T).IsValueType&&argToAdd==null)
+
+            else if (!typeof(T).IsValueType && argToAdd == null)
             {
                 throw new ArgumentNullException("input value cannot be null");
             }
             else
             {
-                this.storeArray [Count++] = argToAdd;
+                this[Count++] = argToAdd;
                 return Count;
             }
         }
@@ -54,13 +44,14 @@ namespace CSharp.Activity.Datastore
             {
                 throw new ArgumentOutOfRangeException("Argument is out of range");
             }
+            /* else return indexToInsert;*/
             else
             { 
-                storeArray[indexToInsert++] = argToInsert;
-                return Count;
 
-            }
+            }   this[indexToInsert++] = argToInsert;
+            return indexToInsert;
         }
+
         public override void Remove(T argToRemove)
         {
             if (!typeof(T).IsValueType && argToRemove == null)
@@ -69,26 +60,26 @@ namespace CSharp.Activity.Datastore
             }
             bool isRemoved = false;
 
-           
+
             for (int index = 0; index < this.Count; index++)
             {
-                if (this.storeArray[index].Equals(argToRemove))
+                if (this[index].Equals(argToRemove))
                 {
                     RemoveAt(index);
                     isRemoved = true;
                 }
-                
+
             }
 
-            if (isRemoved==false)
+            if (isRemoved == false)
             {
                 throw new InvalidOperationException();
             }
-            
+
         }
+
         public override void RemoveAt(int removeObjectIndex)
         {
-           
             if (this.IsEmpty())
             {
                 throw new NotImplementedException("Īmpossible to remove");
@@ -100,23 +91,26 @@ namespace CSharp.Activity.Datastore
             else
             {
 
-                for (int i = removeObjectIndex; i < storeArray.Length - 1; i++)
+                for (int i = removeObjectIndex; i < this.Count; i++)
                 {
-                    storeArray[i] = storeArray[i + 1];
-                   
+                    this[i] = this[i + 1];
+
                 }
                 Count--;
             }
         }
-
     }
+}
+
+    
    /// <summary>
    /// Summary description for AbstractArrayStore.
    /// </summary>
    public abstract class AbstractArrayStore<T>
    {
-      //This is a constant that represents the code value returned when an object cannot be found in the array
-      public const int NOT_IN_STRUCTURE = -1;
+
+    //This is a constant that represents the code value returned when an object cannot be found in the array
+    public const int NOT_IN_STRUCTURE = -1;
       
       //This is a constant that represents the default size of the array
       public const int DEFAULT_SIZE = 5;
@@ -258,4 +252,4 @@ namespace CSharp.Activity.Datastore
          }
       }
    }
-}
+
